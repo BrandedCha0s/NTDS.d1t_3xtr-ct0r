@@ -1,6 +1,8 @@
 # NTDS.d1t_3xtr-ct0r
 A program to install necessary tool to extract and crack NTDS.dit hash file. For this to work you must know the Metasploit option of; RHOST, SMBDomain, SMBUser and SMBPass details for the Admin user.
 
+TESTED ON WINDOWS SERVER 2012R2 VIRTUAL MACHINE
+
 # Usage
 git clone https://github.com/BrandedCha0s/NTDS.d1t_3xtr-ct0r.git
 
