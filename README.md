@@ -6,3 +6,12 @@ git clone https://github.com/BrandedCha0s/NTDS.d1t_3xtr-ct0r.git
 
 
 ./Extractor.sh
+
+# Dependencies
+
+To run the program successfully the following tools must be installed.
+
+John (Hash Cracker)
+
+Metasploit
+
