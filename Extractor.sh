@@ -23,8 +23,10 @@ Install_tools () {
   	git clone https://github.com/csababarta/ntdsxtract.git &>/dev/null
 
   #Install Korelogic wordlist ruleset
-    cd /
-  	wget http://openwall.info/wiki/_media/john/korelogic-rules-20100801-reworked-all-3k.txt >> /etc/john/john.conf &>/dev/null
+  cd /root/Downloads
+  	wget http://openwall.info/wiki/_media/john/korelogic-rules-20100801-reworked-all-3k.txt &>/dev/null
+    cat korelogic-rules-20100801-reworked-all-3k.txt >> /etc/john/john.conf
+    cd /root
   echo    "         Done!!!"
   sleep 1
 }
