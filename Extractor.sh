@@ -152,7 +152,10 @@ do
          if [ "$libflag" = "false" ] || [ "$ntdsflag" = "false" ] || [ "$koreflag" = "false" ]; then
              Install_tools
            else
-             echo "Everything Is Installed"
+             echo "          ========================"
+             echo -e "\e[32m        ***Everything Is Installed***\e[0m"
+             echo "          ========================"
+             echo
            fi
              ;;
         "Extract NTDS.dit")
