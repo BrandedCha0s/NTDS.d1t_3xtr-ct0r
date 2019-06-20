@@ -1,11 +1,28 @@
 #!/bin/bash
 
+#Date: 20-06-2019
+#Author: BrandedCha0s
+#Version: 1.1
+#Tested on Windows Server 2012R2
+#Youtube Channel: https://www.youtube.com/channel/UCV3YXm90Fqg-9l240y0AkyA
+
+#Description: Makes a shadow copy, then extracts and cracks the locked NTDS.dit file from Domain controllers with John
+
+#Variables
+File=/root/libesedb-20181229/configure
+File2=/root/ntdsxtract/dsusers.py
+File3=/root/Downloads/korelogic-rules-20100801-reworked-all-3k.txt
+libflag=false
+ntdsflag=false
+koreflag=false
+
 Install_tools () {
   echo -e "\e[31m   ====================                             \e[0m"
   echo -e "\e[33m   **INSTALLING TOOLS**                             \e[0m"
   echo -e "\e[31m   ====================                             \e[0m"
   echo    "      Please Wait!!!"
   #Install latest version of libesedb
+  if [ "$libflag" = false ]; then
   	wget https://github.com/libyal/libesedb/releases/download/20181229/libesedb-experimental-20181229.tar.gz &>/dev/null
   	 cp libesedb-experimental-20181229.tar.gz /root
       cd /root
@@ -16,17 +33,23 @@ Install_tools () {
   	  make &>/dev/null
   echo    "     Almost There! :-)"
   	sudo make install &>/dev/null
-
+  fi
 
   #Install ntdsxtract (AD forensic tool)
+  if [ "$ntdsflag" = false ]; then
     cd /root
   	git clone https://github.com/csababarta/ntdsxtract.git &>/dev/null
+  fi
 
   #Install Korelogic wordlist ruleset
+  if [ "$koreflag" = false ]; then
   cd /root/Downloads
+    echo "Korelogic install"
   	wget http://openwall.info/wiki/_media/john/korelogic-rules-20100801-reworked-all-3k.txt &>/dev/null
     cat korelogic-rules-20100801-reworked-all-3k.txt >> /etc/john/john.conf
     cd /root
+  fi
+
   echo    "         Done!!!"
   sleep 1
 }
@@ -38,6 +61,7 @@ Extract_hashes () {
   #gnome-terminal -e msfconsole /root/ntdssetup.rc
   echo
   echo "In a new terminal open msfconsole and run auxiliary/admin/smb/psexec_ntdsgrab"
+  #ToDo add msfconsole functionality
   echo
   echo "Be sure to fill in RHOSTS, SMBDomain, SMBUser, SMBPass and then run may have to be run twice"
   echo -e "\e[1;31m                ***HIT ENTER WHEN DONE***         \e[0m"
@@ -82,7 +106,7 @@ echo
 echo
 echo -e "\e[32mNTDS.dit Extraction Tool Installer, Extractor and Cracker\e[0m"
 echo
-echo -e "\e[32m       By: BrandedCha0s ============ Version: 1.0\e[0m"
+echo -e "\e[32m       By: BrandedCha0s ============ Version: 1.1\e[0m"
 echo
 
 #Options Menu
@@ -92,8 +116,20 @@ select opt in "${options[@]}"
 do
     case $opt in
          "Install Tools")
-            Install_tools
-            ;;
+         if [ -f "$File" ]; then
+           echo "Libesedb Already Installed"
+           libflag=true
+         fi
+         if [ -f "$File2" ]; then
+            echo "ntdsxtract Already Installed"
+            ntdsflag=true
+         fi
+         if [ -f "$File3" ]; then
+            echo "Korelogic-rules Already Installed"
+            koreflag=true
+         fi
+             Install_tools
+             ;;
         "Extract NTDS.dit")
             Extract_hashes
             ;;
