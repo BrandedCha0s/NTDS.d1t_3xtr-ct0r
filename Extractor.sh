@@ -17,34 +17,50 @@ ntdsflag=false
 koreflag=false
 
 Install_tools () {
-  echo -e "\e[31m   ====================                             \e[0m"
-  echo -e "\e[33m   **INSTALLING TOOLS**                             \e[0m"
-  echo -e "\e[31m   ====================                             \e[0m"
-  echo    "      Please Wait!!!"
+  echo -e "\e[31m     ====================                             \e[0m"
+  echo -e "\e[33m     **INSTALLING TOOLS**                             \e[0m"
+  echo -e "\e[31m     ====================                             \e[0m"
+  echo -e "\e[1;31m        Please Wait!!!\e[0m"
+  echo
   #Install latest version of libesedb
   if [ "$libflag" = false ]; then
+  echo -e "\e[32m     Downloading Libesedb\e[0m"
+  echo
   	wget https://github.com/libyal/libesedb/releases/download/20181229/libesedb-experimental-20181229.tar.gz &>/dev/null
   	 cp libesedb-experimental-20181229.tar.gz /root
       cd /root
+  echo -e "\e[32m      Unpacking Libesedb\e[0m"
+  echo
   	   tar xfv libesedb-experimental-20181229.tar.gz &>/dev/null
   	    cd libesedb-20181229
+  echo -e "\e[32m     Configuring Libesedb\e[0m"
+  echo
   	   ./configure &>/dev/null
-  echo    "      Keep Waiting!"
+  echo -e "\e[1;31m        Keep Waiting!\e[0m"
+  echo
+  echo -e "\e[32m       Making Libesedb\e[0m"
+  echo
   	  make &>/dev/null
-  echo    "     Almost There! :-)"
+  echo -e "\e[31m       Almost There! :-)\e[0m"
+  echo
+  echo -e "\e[32m     Installing Libesedb\e[0m"
+  echo
   	sudo make install &>/dev/null
   fi
 
   #Install ntdsxtract (AD forensic tool)
   if [ "$ntdsflag" = false ]; then
     cd /root
+    echo -e "\e[32m    Installing ntdsxtract\e[0m"
+    echo
   	git clone https://github.com/csababarta/ntdsxtract.git &>/dev/null
   fi
 
   #Install Korelogic wordlist ruleset
   if [ "$koreflag" = false ]; then
   cd /root/Downloads
-    echo "Korelogic install"
+    echo -e "\e[1;31m Installing Korelogic-rules & Copying to john.conf\e[0m"
+    echo
   	wget http://openwall.info/wiki/_media/john/korelogic-rules-20100801-reworked-all-3k.txt &>/dev/null
     cat korelogic-rules-20100801-reworked-all-3k.txt >> /etc/john/john.conf
     cd /root
@@ -117,18 +133,27 @@ do
     case $opt in
          "Install Tools")
          if [ -f "$File" ]; then
-           echo "Libesedb Already Installed"
+           echo
+           echo -e "\e[32m ****Libesedb Already Installed****\e[0m"
            libflag=true
          fi
          if [ -f "$File2" ]; then
-            echo "ntdsxtract Already Installed"
+            echo
+            echo -e "\e[32m ****ntdsxtract Already Installed****\e[0m"
             ntdsflag=true
          fi
          if [ -f "$File3" ]; then
-            echo "Korelogic-rules Already Installed"
+            echo
+            echo -e "\e[32m ****Korelogic-rules Already Installed****\e[0m"
+            echo
             koreflag=true
          fi
+             #Install_tools
+         if [ "$libflag" = "false" ] || [ "$ntdsflag" = "false" ] || [ "$koreflag" = "false" ]; then
              Install_tools
+           else
+             echo "Everything Is Installed"
+           fi
              ;;
         "Extract NTDS.dit")
             Extract_hashes
