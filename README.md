@@ -12,11 +12,11 @@ chmod +x Extractor.sh
 
 ./Extractor.sh
 
-# Dependencies
+# Tools Needed
 
-To run the program successfully the following tools must be installed.
+To successfully crack .dit and .bin files with this script the following tools must be installed.
 
 John (Hash Cracker)
 
-Metasploit
+Metasploit (Optional; Other methods of obtaining the .dit & .bin files can be used)
 
