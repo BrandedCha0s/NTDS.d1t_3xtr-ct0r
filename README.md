@@ -22,7 +22,7 @@ Metasploit (Optional; Other methods of obtaining the .dit & .bin files can be us
 
 # Changelog
 
-v1.0: initial release
+v1.0: Initial release
 
 v1.1: Added output and installed tools check.
 
